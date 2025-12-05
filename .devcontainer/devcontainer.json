@@ -1,0 +1,48 @@
+{
+  "name": "DispoDialyse Dev Container",
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  
+  // Configuration pour Roo Code et développement
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "RooVeterinaryInc.roo-cline",
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-toolsai.jupyter",
+        "GitHub.copilot",
+        "GitHub.copilot-chat"
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "files.autoSave": "afterDelay"
+      }
+    }
+  },
+
+  // Variables d'environnement qui seront automatiquement chargées
+  // Les secrets Codespaces seront automatiquement injectés
+  "containerEnv": {
+    "WORKSPACE_NAME": "DispoDialyse"
+  },
+
+  // Fonctionnalités supplémentaires
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+
+  // Commandes à exécuter après la création du container
+  "postCreateCommand": "bash .devcontainer/setup.sh",
+
+  // Montages pour persister certaines données
+  "mounts": [
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.gitconfig,target=/home/codespace/.gitconfig,type=bind,consistency=cached"
+  ],
+
+  // Permet l'accès aux ports pour les applications web
+  "forwardPorts": [3000, 5000, 8000, 8080],
+  
+  // Configuration post-démarrage
+  "postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}"
+}
