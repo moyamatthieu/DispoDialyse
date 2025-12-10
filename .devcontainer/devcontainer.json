@@ -1,48 +1,53 @@
 {
-  "name": "DispoDialyse Dev Container",
-  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  "name": "DispoDialyse - Laravel avec Docker",
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/var/www/html",
   
-  // Configuration pour Roo Code et développement
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+  },
+  
   "customizations": {
     "vscode": {
       "extensions": [
-        "RooVeterinaryInc.roo-cline",
-        "ms-python.python",
-        "ms-python.vscode-pylance",
-        "ms-toolsai.jupyter",
-        "GitHub.copilot",
-        "GitHub.copilot-chat"
+        "bmewburn.vscode-intelephense-client",
+        "amiralizadeh9480.laravel-extra-intellisense",
+        "onecentlin.laravel-blade",
+        "bradlc.vscode-tailwindcss",
+        "ms-azuretools.vscode-docker"
       ],
       "settings": {
-        "terminal.integrated.defaultProfile.linux": "bash",
-        "files.autoSave": "afterDelay"
+        "php.validate.executablePath": "/usr/local/bin/php",
+        "editor.formatOnSave": true,
+        "files.associations": {
+          "*.blade.php": "blade"
+        },
+        "emmet.includeLanguages": {
+          "blade": "html"
+        }
       }
     }
   },
-
-  // Variables d'environnement qui seront automatiquement chargées
-  // Les secrets Codespaces seront automatiquement injectés
-  "containerEnv": {
-    "WORKSPACE_NAME": "DispoDialyse"
-  },
-
-  // Fonctionnalités supplémentaires
-  "features": {
-    "ghcr.io/devcontainers/features/git:1": {},
-    "ghcr.io/devcontainers/features/github-cli:1": {}
-  },
-
-  // Commandes à exécuter après la création du container
-  "postCreateCommand": "bash .devcontainer/setup.sh",
-
-  // Montages pour persister certaines données
-  "mounts": [
-    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.gitconfig,target=/home/codespace/.gitconfig,type=bind,consistency=cached"
-  ],
-
-  // Permet l'accès aux ports pour les applications web
-  "forwardPorts": [3000, 5000, 8000, 8080],
   
-  // Configuration post-démarrage
-  "postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}"
+  "forwardPorts": [8000, 3306, 8080, 6379],
+  "portsAttributes": {
+    "8000": {
+      "label": "Laravel App",
+      "onAutoForward": "notify"
+    },
+    "3306": {
+      "label": "MySQL"
+    },
+    "8080": {
+      "label": "phpMyAdmin"
+    },
+    "6379": {
+      "label": "Redis"
+    }
+  },
+  
+  "postCreateCommand": "bash .devcontainer/init.sh",
+  
+  "remoteUser": "sail"
 }

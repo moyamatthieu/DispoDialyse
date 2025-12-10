@@ -1,0 +1,55 @@
+#!/usr/bin/env php
+<?php
+
+define('LARAVEL_START', microtime(true));
+
+/*
+|--------------------------------------------------------------------------
+| Enregistrer l'autoloader
+|--------------------------------------------------------------------------
+|
+| Composer fournit un chargeur de classe pratique et généré automatiquement
+| pour notre application. Nous devons simplement l'utiliser ! Nous exigerons
+| simplement le fichier dans le script ici afin que nous n'ayons pas à nous
+| soucier du chargement manuel de nos classes plus tard.
+|
+*/
+
+require __DIR__.'/vendor/autoload.php';
+
+$app = require_once __DIR__.'/bootstrap/app.php';
+
+/*
+|--------------------------------------------------------------------------
+| Exécuter l'application Artisan Console
+|--------------------------------------------------------------------------
+|
+| Lorsque nous exécutons l'application console, les commandes CLI actuelles
+| seront exécutées dans ce processus de console et les réponses seront
+| envoyées à un terminal ou à un autre périphérique de sortie pour les
+| développeurs. Ici va l'aventure !
+|
+*/
+
+$kernel = $app->make(Illuminate\Contracts\Console\Kernel::class);
+
+$status = $kernel->handle(
+    $input = new Symfony\Component\Console\Input\ArgvInput,
+    new Symfony\Component\Console\Output\ConsoleOutput
+);
+
+/*
+|--------------------------------------------------------------------------
+| Fermer l'application
+|--------------------------------------------------------------------------
+|
+| Une fois qu'Artisan a terminé l'exécution, nous allons déclencher les
+| événements d'arrêt afin que tout travail de nettoyage final puisse être
+| effectué par l'application avant de nous arrêter complètement et de
+| retourner au shell CLI.
+|
+*/
+
+$kernel->terminate($input, $status);
+
+exit($status);

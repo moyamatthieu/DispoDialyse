@@ -1,0 +1,32 @@
+{
+    "name": "dispodialyse",
+    "version": "1.0.0",
+    "type": "module",
+    "description": "Système de gestion de planning pour service de dialyse",
+    "private": true,
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "preview": "vite preview"
+    },
+    "devDependencies": {
+        "@tailwindcss/forms": "^0.5.7",
+        "@tailwindcss/typography": "^0.5.10",
+        "alpinejs": "^3.13.5",
+        "autoprefixer": "^10.4.17",
+        "axios": "^1.6.4",
+        "laravel-vite-plugin": "^1.0.2",
+        "postcss": "^8.4.33",
+        "tailwindcss": "^3.4.1",
+        "vite": "^5.0.12"
+    },
+    "dependencies": {
+        "@fullcalendar/core": "^6.1.10",
+        "@fullcalendar/daygrid": "^6.1.10",
+        "@fullcalendar/interaction": "^6.1.10",
+        "@fullcalendar/timegrid": "^6.1.10",
+        "chart.js": "^4.4.1",
+        "laravel-echo": "^1.16.1",
+        "pusher-js": "^8.4.0-rc2"
+    }
+}

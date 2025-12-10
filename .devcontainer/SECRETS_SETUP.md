@@ -14,11 +14,14 @@ Pour que vos clés API soient automatiquement disponibles sur toutes vos machine
 
 | Nom du secret | Description |
 |---------------|-------------|
-| `OPENAI_API_KEY` | Votre clé API OpenAI |
+| `OPENROUTER_API_KEY` | Votre clé API OpenRouter (recommandé pour Roo Code) |
 | `ANTHROPIC_API_KEY` | Votre clé API Anthropic (Claude) |
+| `OPENAI_API_KEY` | Votre clé API OpenAI |
 | `GOOGLE_AI_API_KEY` | Votre clé API Google AI |
+| `QDRANT_API_KEY` | Votre clé API Qdrant (base de données vectorielle) |
 | `MISTRAL_API_KEY` | Votre clé API Mistral (optionnel) |
 | `GROQ_API_KEY` | Votre clé API Groq (optionnel) |
+| `DEEPINFRA_API_KEY` | Votre clé API DeepInfra (optionnel) |
 
 ### Méthode 2 : Secrets au niveau de l'utilisateur (Pour tous vos Codespaces)
 
@@ -29,18 +32,37 @@ Pour que vos clés API soient automatiquement disponibles sur toutes vos machine
 
 ## 🎯 Utilisation dans Roo Code
 
-Une fois configurés, vos secrets seront automatiquement disponibles comme variables d'environnement dans votre Codespace. Roo Code pourra les utiliser directement.
+Les secrets GitHub Codespaces sont disponibles comme variables d'environnement, mais **Roo Code nécessite une configuration manuelle** :
 
-### Vérification
+### Étape 1 : Vérifier que vos secrets sont chargés
 
-Pour vérifier que vos secrets sont bien chargés, dans le terminal :
+Dans le terminal :
 
 ```bash
-echo $OPENAI_API_KEY
+echo $OPENROUTER_API_KEY
 echo $ANTHROPIC_API_KEY
+echo $QDRANT_API_KEY
 ```
 
-⚠️ **Important** : Ne commitez JAMAIS vos clés API dans Git !
+### Étape 2 : Configurer Roo Code
+
+1. **Ouvrez Roo Code** (icône dans la barre latérale de VS Code)
+2. Cliquez sur l'icône **⚙️ Settings**
+3. Sélectionnez **"OpenRouter"** dans "API Provider"
+4. **Copiez-collez** la valeur de `$OPENROUTER_API_KEY` dans le champ "OpenRouter API Key"
+5. Sélectionnez votre modèle préféré
+
+**Astuce** : Pour copier facilement votre clé depuis le terminal :
+```bash
+echo $OPENROUTER_API_KEY | pbcopy  # Sur macOS
+echo $OPENROUTER_API_KEY | xclip -selection clipboard  # Sur Linux
+```
+
+⚠️ **Important** : 
+- Roo Code stocke les clés dans VS Code Secrets (chiffré)
+- Cette configuration **persiste** sur la même machine Codespace
+- Sur un **nouveau Codespace**, vous devrez reconfigurer Roo Code (mais vos secrets GitHub seront déjà chargés)
+- Ne commitez JAMAIS vos clés API dans Git !
 
 ## 🔄 Méthode alternative : Fichier .env local (Non persistant)
 
